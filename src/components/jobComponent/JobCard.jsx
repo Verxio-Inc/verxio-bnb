@@ -24,6 +24,16 @@ const JobCard = ({ jobs }) => {
     ownerBio: ownerDetails?.bio,
   }
 
+jobs.upvotes = jobs.upvotes.toString();
+jobs.downvotes = jobs.downvotes.toString();
+jobs.taskId = jobs.taskId.toString();
+jobs.totalPeople = jobs.totalPeople.toString();
+jobs.prizePoolUSDAmount = jobs.prizePoolUSDAmount.toString()
+jobs.prizePoolAmount = jobs.prizePoolAmount.toString()
+jobs.postedTime = BigInt(jobs.postedTime) * 1000n
+
+
+
 console.log("Job Details", data)
   const logo = (coin) => {
     if (coin === "etherum") {
