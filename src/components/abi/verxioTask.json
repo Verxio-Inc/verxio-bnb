@@ -1,0 +1,501 @@
+{
+    "VerxioCreateTask": [
+        {
+            "inputs": [],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "internalType": "uint256",
+                    "name": "taskId",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "commenter",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "string",
+                    "name": "commentText",
+                    "type": "string"
+                }
+            ],
+            "name": "Commented",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "internalType": "uint256",
+                    "name": "taskId",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "voter",
+                    "type": "address"
+                }
+            ],
+            "name": "Downvoted",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "internalType": "uint256",
+                    "name": "taskId",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "jobPoster",
+                    "type": "address"
+                },
+                {
+                    "indexed": true,
+                    "internalType": "string",
+                    "name": "jobTitle",
+                    "type": "string"
+                }
+            ],
+            "name": "TaskSubmitted",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "internalType": "uint256",
+                    "name": "taskId",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "voter",
+                    "type": "address"
+                }
+            ],
+            "name": "Upvoted",
+            "type": "event"
+        },
+        {
+            "inputs": [],
+            "name": "avaxPriceFeed",
+            "outputs": [
+                {
+                    "internalType": "contract AggregatorV3Interface",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "btcUsdPriceFeed",
+            "outputs": [
+                {
+                    "internalType": "contract AggregatorV3Interface",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_taskId",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_commentText",
+                    "type": "string"
+                }
+            ],
+            "name": "commentOnTask",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_taskId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "downvoteTask",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "ethUsdPriceFeed",
+            "outputs": [
+                {
+                    "internalType": "contract AggregatorV3Interface",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getAllTasks",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "uint256",
+                            "name": "taskId",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "jobPoster",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "jobTitle",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "jobDescription",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "jobResponsibilities",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "jobRequirements",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "jobRewardPool",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "jobType",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "paymentToken",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "totalPeople",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "prizePoolAmount",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "prizePoolUSDAmount",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "fileDocUrl",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "enum VerxioSubmitTask.TaskStatus",
+                            "name": "status",
+                            "type": "uint8"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "upvotes",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "downvotes",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "postedTime",
+                            "type": "uint256"
+                        }
+                    ],
+                    "internalType": "struct VerxioSubmitTask.Task[]",
+                    "name": "",
+                    "type": "tuple[]"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_taskId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getTask",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "uint256",
+                            "name": "taskId",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "jobPoster",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "jobTitle",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "jobDescription",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "jobResponsibilities",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "jobRequirements",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "jobRewardPool",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "jobType",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "paymentToken",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "totalPeople",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "prizePoolAmount",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "prizePoolUSDAmount",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "fileDocUrl",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "enum VerxioSubmitTask.TaskStatus",
+                            "name": "status",
+                            "type": "uint8"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "upvotes",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "downvotes",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "postedTime",
+                            "type": "uint256"
+                        }
+                    ],
+                    "internalType": "struct VerxioSubmitTask.Task",
+                    "name": "",
+                    "type": "tuple"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_taskId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getTaskComments",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "address",
+                            "name": "commenter",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "text",
+                            "type": "string"
+                        }
+                    ],
+                    "internalType": "struct VerxioSubmitTask.Comment[]",
+                    "name": "",
+                    "type": "tuple[]"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "owner",
+            "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_jobTitle",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_jobDescription",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_fileDocUrl",
+                    "type": "string"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_totalPeople",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_prizePoolAmount",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_jobType",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_paymentToken",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_jobResponsibilities",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_jobRequirements",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_jobRewardPool",
+                    "type": "string"
+                }
+            ],
+            "name": "submitTask",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_taskId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "upvoteTask",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "usdtUsdPriceFeed",
+            "outputs": [
+                {
+                    "internalType": "contract AggregatorV3Interface",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ]
+}
