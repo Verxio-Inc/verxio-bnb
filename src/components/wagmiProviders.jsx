@@ -5,7 +5,6 @@ import {
   getDefaultConfig, lightTheme,
 } from '@rainbow-me/rainbowkit';
 import { WagmiProvider } from 'wagmi';
-import { ThirdwebProvider } from "@thirdweb-dev/react";
 
 import {
   avalancheFuji
@@ -34,12 +33,7 @@ const WagmiProviders = ({ children }) => {
             overlayBlur: "small",
           })}
         >
-          <ThirdwebProvider 
-          clientId="f5888353ab056968602a49dda7537ef3" 
-          activeChain="avalanche-fuji"
-          >
           {children}
-          </ThirdwebProvider>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

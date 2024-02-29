@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useState } from "react";
 
+
 const Page = () => {
   const userProfile = useSelector(
     (state) => state.persistedReducer.user.userProfile
@@ -16,7 +17,16 @@ const Page = () => {
 
   const user = useSelector((state) => state.persistedReducer.user.userValue);
 
-  const [loading, setLoading] = useState(false);
+  const  [loading, setLoading] = useState(false);
+  const  [title, setTitle] = useState();
+  const  [description, setDescription] = useState();
+  const  [totalPeople, setTotalPeople] = useState();
+  const  [amount, setAmount] = useState();
+  const  [jobType, setJobType] = useState();
+  const  [paymentMethod, setPaymentMethod] = useState();
+  const  [responsibilities, setResponsibilities] = useState();
+  const  [requirements, setRequirements] = useState();
+  const  [reward, setReward] = useState();
 
   const initialValues = {
     title: "",
@@ -48,47 +58,53 @@ const Page = () => {
     fileDoc: Yup.string().required("Please upload necessary doc"),
   });
 
-  const submitValue = async (values) => {
-    setLoading(true);
-
-    const config = useSimulateContract({
-      VerxioCreateTask,
-      address: '0x4c321A088EC43F5C9e246e4894798C7c77deb1e6',
-      functionName: 'submitTask',
-      args: [
-        values.title,
-        values.description,
-        'filedocurl.com',
-        values.totalPeople,
-        values.amount,
-        values.jobType,
-        values.paymentMethod,
-        values.responsibilities,
-        values.requirements,
-        values.reward,
-      ],
-    })
-
     const {
       data: taskData,
       isLoading: isCreatingTask,
       isSuccess: isTaskCreated,
-      write: submitTaskWrite,
+      writeContract: submitTaskWrite,
       isError: isCreatingTaskError,
-    } = useWriteContract(config);
+    } = useWriteContract({
+      abi: VerxioCreateTask,
+      address: '0x4c321A088EC43F5C9e246e4894798C7c77deb1e6',
+      functionName: 'submitTask',
+      args: [
+        title,
+        description,
+        'filedocurl.com',
+        totalPeople,
+        amount,
+        jobType,
+        paymentMethod,
+        responsibilities,
+        requirements,
+        reward,
+      ],
+    });
+    
+    const submitValue = async (values) => {
+      setLoading(true);
+      setTitle(values.title),
+      setDescription(values.description),
+      'filedocurl.com',
+      setTotalPeople(values.totalPeople),
+      setAmount(values.amount),
+      setJobType(values.jobType),
+      setPaymentMethod(values.paymentMethod),
+      setResponsibilities(values.responsibilities),
+      setRequirements(values.requirements),
+      setReward(values.reward)
 
-    {
-      console.log("Form values:", values);
       try {
-        const transaction = submitTaskWrite();
+        const transaction = await submitTaskWrite();
         toast.success("Task created successfully.");
         setLoading(false);
       } catch (error) {
-        console.error("File Error:", error);
+        console.error("Task Error:", error);
         toast.error('Task Upload Failed')
         setLoading(false);
       }
-    }
+    
   };
 
   return (
@@ -180,8 +196,8 @@ const Page = () => {
                 as="select"
                 className="border outline-none rounded-[4px] border-black p-2"
               >
-                <option value="">select payment token eg. ICP</option>
-                <option value="icp">ICP</option>
+                <option value="">select payment token eg. BNB </option>
+                <option value="BNB">BNB</option>
                 <option value="USDT">USDT</option>
                 <option value="USDC">USDC</option>
                 <option value="etherum">Ethereum</option>

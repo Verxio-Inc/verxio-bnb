@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setEditUser, setUserProfile } from "../../../../slices/userSlices";
 import Link from "next/link";
 import {  toast } from "react-toastify";
-import { useStorageUpload } from "@thirdweb-dev/react";
+// import { useStorageUpload } from "@thirdweb-dev/react";
 
 const Page = () => {
   const user = useSelector((state) => state.persistedReducer.user.userValue);
@@ -46,7 +46,7 @@ const Page = () => {
   const handleUploadButtonClick = () => {
     fileInputRef.current.click();
   };
-  const { mutateAsync: upload } = useStorageUpload();
+  // const { mutateAsync: upload } = useStorageUpload();
   
   const initialValues = {
     firstName: userProfile?.firstName || "",
