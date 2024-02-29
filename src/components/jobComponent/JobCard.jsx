@@ -75,6 +75,14 @@ console.log("Job Details", data)
     fetchOwnerDetails();      
   }, [jobs.jobPoster]);
 
+  const formatNumberWithCommas = (number) => {
+    if (isNaN(number)) {
+      return number; // Return as is if not a valid number
+    }
+    return parseFloat(number).toLocaleString();
+  };
+
+
   return (
     <div className="bg-[#FFFFFF] px-[32px] py-[24px] rounded-2xl shadow mb-[34px]">
       <div className=" rounded-2xl bg-[#F7F7FD] p-[18px] cursor-pointer flex justify-between border">
@@ -105,7 +113,7 @@ console.log("Job Details", data)
         </div>
         <div className="flex gap-[24px] items-center">
           <div className="flex border rounded-lg px-4 py-2 border-[#B6B8EC] items-center gap-2">
-            <p className="text-[14px] font-medium">{data?.prizePoolAmount.toString()}</p>
+            <p className="text-[14px] font-medium">{formatNumberWithCommas(data?.prizePoolAmount.toString())}</p>
             {/* <span className="text-[8px] mr-1">$300</span> */}
             <Image
               alt="Ethereum"

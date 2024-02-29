@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import Button from "../../../components/Button";
 import * as Yup from "yup";
 import { nanoid } from "nanoid";
-import { useSimulateContract, useWriteContract } from 'wagmi'
+import { useContractWrite, usePrepareContractWrite } from 'wagmi'
 import  { VerxioCreateTask } from '../../../components/abi/verxioTask.json'
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -58,35 +58,35 @@ const Page = () => {
     fileDoc: Yup.string().required("Please upload necessary doc"),
   });
 
+  const { config } = usePrepareContractWrite({
+    abi: VerxioCreateTask,
+    address: '0x4c321A088EC43F5C9e246e4894798C7c77deb1e6',
+    functionName: 'submitTask',
+    args: [
+      title,
+      description,
+      'filedocurl.com',
+      totalPeople,
+      amount,
+      jobType,
+      paymentMethod,
+      responsibilities,
+      requirements,
+      reward,
+    ],
+  })
     const {
       data: taskData,
       isLoading: isCreatingTask,
       isSuccess: isTaskCreated,
-      writeContract: submitTaskWrite,
+      write: submitTaskWrite,
       isError: isCreatingTaskError,
-    } = useWriteContract({
-      abi: VerxioCreateTask,
-      address: '0x4c321A088EC43F5C9e246e4894798C7c77deb1e6',
-      functionName: 'submitTask',
-      args: [
-        title,
-        description,
-        'filedocurl.com',
-        totalPeople,
-        amount,
-        jobType,
-        paymentMethod,
-        responsibilities,
-        requirements,
-        reward,
-      ],
-    });
+    } = useContractWrite(config);
     
     const submitValue = async (values) => {
       setLoading(true);
       setTitle(values.title),
       setDescription(values.description),
-      'filedocurl.com',
       setTotalPeople(values.totalPeople),
       setAmount(values.amount),
       setJobType(values.jobType),
@@ -96,11 +96,11 @@ const Page = () => {
       setReward(values.reward)
 
       try {
-        const transaction = await submitTaskWrite();
+        const transaction = submitTaskWrite();
         toast.success("Task created successfully.");
         setLoading(false);
-      } catch (error) {
-        console.error("Task Error:", error);
+      } catch (isCreatingTaskError) {
+        console.error("Task Error:", isCreatingTaskError);
         toast.error('Task Upload Failed')
         setLoading(false);
       }

@@ -3,8 +3,8 @@ import Image from "next/image";
 import React from "react";
 import Thumbsup from "../assets/thumbs-up.svg";
 import Thumbsdown from "../assets/thumbs-down.svg";
-import { useWriteContract } from 'wagmi'
-import VerxioCreateTask from "./abi/verxioTask.json"
+import { useContractWrite } from "wagmi";
+import { VerxioCreateTask } from "./abi/verxioTask.json"
 
 
 const LikeButtons = ({
@@ -16,22 +16,22 @@ const LikeButtons = ({
 }) => {
 
   const {
-    writeContract: upvoteTask,
-  } = useWriteContract({
+    write: upvoteTask,
+  } = useContractWrite({
     abi: VerxioCreateTask,
     address: '0x4c321A088EC43F5C9e246e4894798C7c77deb1e6',
-    functionName: 'upvote',
+    functionName: 'upvoteTask',
     args: [
       id
     ],
   });
 
   const {
-    writeContract: downvoteTask,
-  } = useWriteContract({
+    write: downvoteTask,
+  } = useContractWrite({
     abi: VerxioCreateTask,
     address: '0x4c321A088EC43F5C9e246e4894798C7c77deb1e6',
-    functionName: 'downvote',
+    functionName: 'downvoteTask',
     args: [
       id
     ],

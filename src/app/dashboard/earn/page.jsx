@@ -3,7 +3,7 @@
 import JobCard from "../../../components/jobComponent/JobCard";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useReadContract } from "wagmi";
+import { useContractRead } from "wagmi";
 import  { VerxioCreateTask } from '../../../components/abi/verxioTask.json'
 
 const Page = () => {
@@ -13,14 +13,14 @@ const Page = () => {
     (state) => state.persistedReducer.user.userProfile
   );
 
-  const { data } = useReadContract({
+  const { data } = useContractRead({
     address: "0x4c321A088EC43F5C9e246e4894798C7c77deb1e6",
     abi: VerxioCreateTask,
     functionName: "getAllTasks",
   });
 
   useEffect(() => {
-    setJobs(data);
+    setJobs(data?.slice().reverse());
   }, [data]);
 
 

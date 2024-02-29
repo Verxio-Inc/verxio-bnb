@@ -1,42 +1,69 @@
 "use client";
-import '@rainbow-me/rainbowkit/styles.css';
+import { WagmiConfig, createConfig, configureChains } from "wagmi";
+import "@rainbow-me/rainbowkit/styles.css";
+import { RainbowKitProvider, lightTheme } from "@rainbow-me/rainbowkit";
+import { publicProvider } from "wagmi/providers/public";
+import { connectorsForWallets } from "@rainbow-me/rainbowkit";
 import {
-  RainbowKitProvider,
-  getDefaultConfig, lightTheme,
-} from '@rainbow-me/rainbowkit';
-import { WagmiProvider } from 'wagmi';
+  metaMaskWallet,
+  trustWallet,
+  injectedWallet,
+  rainbowWallet,
+  walletConnectWallet,
+  coinbaseWallet,
+} from "@rainbow-me/rainbowkit/wallets";
+import { avalancheFuji } from "viem/chains";
 
-import {
-  avalancheFuji
-} from 'wagmi/chains';
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+const projectId = "274de4271228fdd69013c56274f0e688";
+const { chains, publicClient } = configureChains(
+  [ avalancheFuji ],
+  [publicProvider()]
+);
 
-const config = getDefaultConfig({
-  appName: 'Verxio | Decentralizing the future of work!',
-  projectId: '274de4271228fdd69013c56274f0e688',
-  chains: [avalancheFuji],
-  ssr: true
+const connectors = connectorsForWallets([
+  {
+    groupName: "Recommended",
+    wallets: [
+      metaMaskWallet({ projectId, chains }),
+      trustWallet({ projectId, chains }),
+    ],
+  },
+  {
+    groupName: "Others",
+    wallets: [
+      coinbaseWallet({
+        chains,
+        appName: "Verxio | Decentralizing the future of work!",
+      }),
+      injectedWallet({ chains }),
+      rainbowWallet({ projectId, chains }),
+      walletConnectWallet({ projectId, chains }),
+    ],
+  },
+]);
+
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors,
+  publicClient,
 });
-
-const queryClient = new QueryClient();
 
 const WagmiProviders = ({ children }) => {
   return (
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
-         <RainbowKitProvider
-          theme={lightTheme({
-            accentColor: "#1570ef",
-            accentColorForeground: "white",
-            borderRadius: "small",
-            fontStack: "system",
-            overlayBlur: "small",
-          })}
-        >
-          {children}
-        </RainbowKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
+    <WagmiConfig config={wagmiConfig}>
+      <RainbowKitProvider
+        theme={lightTheme({
+          accentColor: "#1570ef",
+          accentColorForeground: "white",
+          borderRadius: "small",
+          fontStack: "system",
+          overlayBlur: "small",
+        })}
+        chains={chains}
+      >
+        {children}
+      </RainbowKitProvider>
+    </WagmiConfig>
   );
 };
 

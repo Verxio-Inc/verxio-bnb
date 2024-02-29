@@ -127,6 +127,13 @@ const JobDescription = () => {
       // setDownVoteValue(data?.contract?.downvotes)
   };
 
+  const formatNumberWithCommas = (number) => {
+    if (isNaN(number)) {
+      return number; // Return as is if not a valid number
+    }
+    return parseFloat(number).toLocaleString();
+  };
+
   return (
     <>
       <div>
@@ -147,7 +154,7 @@ const JobDescription = () => {
               </div>
             </div>
             <div className="flex border rounded-lg px-4 py-2 border-[#B6B8EC] items-center gap-2">
-              <p className="text-[14px] font-medium mt-1">{data.prizePoolAmount.toString()}</p>
+              <p className="text-[14px] font-medium mt-1">{formatNumberWithCommas(data.prizePoolAmount.toString())}</p>
               {/* <span className="text-[8px] mr-1">$300</span> */}
               <Image
                 alt="Ethereum"
