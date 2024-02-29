@@ -3,7 +3,6 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Button from "../Button";
 import Ethereum from "../../assets/ethereum.svg";
-import ICP from "../../assets/icp-logo.svg";
 import Solana from "../../assets/solana-logo.svg";
 import USDC from "../../assets/usdc-logo.svg";
 import USDT from "../../assets/usdt-logo.svg"
@@ -16,6 +15,7 @@ import LikeButtons from "../likeButtons";
 import CommentButton from "../commentButton";
 import { CloseCircle } from "iconsax-react";
 import { toast } from "react-toastify";
+import BNB from "../../assets/bnb-bnb-logo.svg"
 
 const JobDescription = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -73,7 +73,9 @@ const JobDescription = () => {
   const logo = (coin) => {
     if (coin === "etherum") {
       return Ethereum;
-    } else if (coin === "solana") {
+    } else if (coin === "BNB") {
+      return BNB;
+    }else if (coin === "solana") {
       return Solana;
     } else if (coin === 'USDT'){
     return USDT;
@@ -125,6 +127,13 @@ const JobDescription = () => {
       // setDownVoteValue(data?.contract?.downvotes)
   };
 
+  const formatNumberWithCommas = (number) => {
+    if (isNaN(number)) {
+      return number; // Return as is if not a valid number
+    }
+    return parseFloat(number).toLocaleString();
+  };
+
   return (
     <>
       <div>
@@ -145,7 +154,7 @@ const JobDescription = () => {
               </div>
             </div>
             <div className="flex border rounded-lg px-4 py-2 border-[#B6B8EC] items-center gap-2">
-              <p className="text-[14px] font-medium mt-1">{data.prizePoolAmount.toString()}</p>
+              <p className="text-[14px] font-medium mt-1">{formatNumberWithCommas(data.prizePoolAmount.toString())}</p>
               {/* <span className="text-[8px] mr-1">$300</span> */}
               <Image
                 alt="Ethereum"
@@ -155,7 +164,7 @@ const JobDescription = () => {
             </div>
           </div>
           <div className=" flex gap-[24px] mt-[22px] items-center">
-            <LikeButtons upVote={upVote} id={"data.taskId.toString()"} upVoteValue={upVoteValue} downVote={downVote} downVoteValue={downVoteValue} />
+            <LikeButtons upVote={upVote} id={"data.taskId.toString()"} downVote={downVote} upVoteValue={data.upvotes} downVoteValue={data.downvotes} />
             <CommentButton />
           </div>
         </div>

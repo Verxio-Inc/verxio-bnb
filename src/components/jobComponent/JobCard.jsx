@@ -2,10 +2,10 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import Ethereum from "../../assets/ethereum.svg";
-import ICP from "../../assets/icp-logo.svg";
 import USDC from '../../assets/usdc-logo.svg'
 import USDT from '../../assets/usdt-logo.svg'
 import Solana from "../../assets/solana-logo.svg";
+import BNB from "../../assets/bnb-bnb-logo.svg"
 import Button from "../Button";
 import { setJobDetails } from "../../../slices/jobSlice";
 import { useSelector, useDispatch } from "react-redux";
@@ -24,21 +24,33 @@ const JobCard = ({ jobs }) => {
     ownerBio: ownerDetails?.bio,
   }
 
-jobs.upvotes = jobs.upvotes.toString();
-jobs.downvotes = jobs.downvotes.toString();
-jobs.taskId = jobs.taskId.toString();
-jobs.totalPeople = jobs.totalPeople.toString();
-jobs.prizePoolUSDAmount = jobs.prizePoolUSDAmount.toString()
-jobs.prizePoolAmount = jobs.prizePoolAmount.toString()
-jobs.postedTime = BigInt(jobs.postedTime) * 1000n
+const milliseconds = Number(data.postedTime) * 1000;
+const date = new Date(milliseconds);
+const formattedDate = date.toLocaleString("default", {
+  year: "numeric",
+  month: "short",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+});
 
+data.postedTime = formattedDate;
+data.upvotes = data.upvotes.toString();
+data.downvotes = data.downvotes.toString();
+data.taskId = data.taskId.toString();
+data.totalPeople = data.totalPeople.toString();
+data.prizePoolUSDAmount = data.prizePoolUSDAmount.toString();
+data.prizePoolAmount = data.prizePoolAmount.toString();
 
 
 console.log("Job Details", data)
   const logo = (coin) => {
     if (coin === "etherum") {
       return Ethereum;
-    } else if (coin === "solana") {
+    } else if (coin === "BNB") {
+      return BNB;
+    }else if (coin === "solana") {
       return Solana;
     } else if (coin === 'USDT'){
     return USDT;
@@ -63,7 +75,14 @@ console.log("Job Details", data)
     fetchOwnerDetails();      
   }, [jobs.jobPoster]);
 
-  console.log("Prize Pool", data?.prizePoolAmount)
+  const formatNumberWithCommas = (number) => {
+    if (isNaN(number)) {
+      return number; // Return as is if not a valid number
+    }
+    return parseFloat(number).toLocaleString();
+  };
+
+
   return (
     <div className="bg-[#FFFFFF] px-[32px] py-[24px] rounded-2xl shadow mb-[34px]">
       <div className=" rounded-2xl bg-[#F7F7FD] p-[18px] cursor-pointer flex justify-between border">
@@ -89,12 +108,12 @@ console.log("Job Details", data)
       </div>
       <div className="flex justify-between mt-[22px] items-center">
         <div className=" flex gap-[24px] items-center">
-          <LikeButtons />
+          <LikeButtons id={data.taskId} upVoteValue={data.upvotes} downVoteValue={data.downvotes}  />
           <CommentButton />
         </div>
         <div className="flex gap-[24px] items-center">
           <div className="flex border rounded-lg px-4 py-2 border-[#B6B8EC] items-center gap-2">
-            <p className="text-[14px] font-medium">{data?.prizePoolAmount.toString()}</p>
+            <p className="text-[14px] font-medium">{formatNumberWithCommas(data?.prizePoolAmount.toString())}</p>
             {/* <span className="text-[8px] mr-1">$300</span> */}
             <Image
               alt="Ethereum"

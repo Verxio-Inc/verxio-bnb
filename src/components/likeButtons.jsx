@@ -3,19 +3,44 @@ import Image from "next/image";
 import React from "react";
 import Thumbsup from "../assets/thumbs-up.svg";
 import Thumbsdown from "../assets/thumbs-down.svg";
+import { useContractWrite } from "wagmi";
+import { VerxioCreateTask } from "./abi/verxioTask.json"
+
 
 const LikeButtons = ({
   upVote,
-  upVoteValue = 0,
+  upVoteValue,
   downVote,
-  downVoteValue = 0,
+  downVoteValue,
   id,
 }) => {
+
+  const {
+    write: upvoteTask,
+  } = useContractWrite({
+    abi: VerxioCreateTask,
+    address: '0x4c321A088EC43F5C9e246e4894798C7c77deb1e6',
+    functionName: 'upvoteTask',
+    args: [
+      id
+    ],
+  });
+
+  const {
+    write: downvoteTask,
+  } = useContractWrite({
+    abi: VerxioCreateTask,
+    address: '0x4c321A088EC43F5C9e246e4894798C7c77deb1e6',
+    functionName: 'downvoteTask',
+    args: [
+      id
+    ],
+  });
+
   const handleUpvoteClick = async () => {
+    console.log("Handling upvote click");
     try {
-      // Perform upvote action
-      await upVote(id);
-      // Optionally update UI or notify parent component
+      upvoteTask()
     } catch (error) {
       console.error("Error upvoting post:", error);
       // Handle error or provide user feedback
@@ -24,9 +49,7 @@ const LikeButtons = ({
 
   const handleDownVoteClick = async () => {
     try {
-      // Perform downvote action
-      await downVote(id);
-      // Optionally update UI or notify parent component
+      downvoteTask()
     } catch (error) {
       console.error("Error downvoting post:", error);
       // Handle error or provide user feedback
