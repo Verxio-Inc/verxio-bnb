@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,7 +24,7 @@ const FriendList = ({
 }: IFriendListProps) => {
   return (
     <Link
-      href={"/dashboard/chatRoom"}
+      href={"/dashboard/chatroom"}
       className={`${
         renderChatbox && "py-3"
       } relative w-full px-6 py-2 border-[#F7F7FD[ border-b flex items-center justify-between cursor-pointer transition duration-300 hover:bg-[#DEDEF7]`}
