@@ -1,5 +1,8 @@
-import CreateMessageGroupNavigation from "../../../components/social-feeds/createMessageGroupNavigation";
-import Overview from "../../../components/social-feeds/overview";
+import {
+  CreateMessageGroupNavigation,
+  Overview,
+  CreateNew
+} from "../../../components/social-feeds"
 
 export default function RootLayout({
   children,
@@ -10,6 +13,7 @@ export default function RootLayout({
     <section className="border p-0 md:p-[32px] rounded">
       <div className="flex flex-col md:flex-row gap-6">
         <Overview />
+        <CreateNew />
         <section className="bg-[#F7F7FD] flex-[40%] flex flex-col h-fit">
           <CreateMessageGroupNavigation />
           {children}

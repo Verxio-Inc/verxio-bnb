@@ -1,38 +1,66 @@
-import Image from "next/image";
+"use client";
 import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
+
+const navItems = [
+  {
+    href: "/dashboard/social-feed",
+    src: "/images1/message.svg",
+    description: "",
+  },
+  {
+    href: "/dashboard/social-feed/create-groups",
+    src: "/images1/addmessage.svg",
+    description: "New Group",
+  },
+  {
+    href: "/dashboard/social-feed/groups",
+    src: "/images1/user.svg",
+    description: "Groups",
+  },
+];
 
 const CreateMessageGroupNavigation = () => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const toggleActiveItem = (index: number) => {
+    if (activeIndex === index) {
+      setActiveIndex(null);
+    } else {
+      setActiveIndex(index);
+    }
+  };
+
   return (
     <div className="h-[54px] w-full flex items-center gap-4">
-      <div className="flex-[40%] pl-6 flex items-center gap-6">
-        <Link href={"/dashboard/social-feed"} className="cursor-pointer text-red-500">
-          <Image
-            src={"/images1/message.svg"}
-            alt="profile picture"
-            width={20}
-            height={20}
-          />
-        </Link>
-
-        <Link href={"/dashboard/social-feed/groups"} className="cursor-pointer">
-          <Image
-            src={"/images1/addmessage.svg"}
-            alt="profile picture"
-            width={20}
-            height={20}
-          />
-        </Link>
-
-        <Link href={"/dashboard/social-feed/create-groups"} className="cursor-pointer">
-          <Image
-            src={"/images1/user.svg"}
-            alt="profile picture"
-            width={20}
-            height={20}
-          />
-        </Link>
+      <div className="flex-[45%] h-[54px] pl-6 ">
+        <div className="flex items-center gap-6  w-full h-full">
+          {navItems.map(({ href, src /*description*/ }, index) => (
+            <Link
+              key={index}
+              onClick={() => toggleActiveItem(index)}
+              href={href}
+              className={`cursor-pointer flex flex-col items-center j ustify-center te xt-center ${
+                activeIndex === index ? "text-[#00ADEF]" : ""
+              }`}
+            >
+              <Image
+                src={src}
+                alt={"navigation-icons"}
+                width={20}
+                height={20}
+              />
+              {/* {activeIndex === index && description && (
+                <p className="text-[#00ADEF] text-[8px] w-full">
+                  {description}
+                </p>
+              )} */}
+            </Link>
+          ))}
+        </div>
       </div>
-      <div className="flex-[60%] h-full w-full relative">
+      <div className="flex-[55%] h-full w-full relative">
         <Image
           src={"/images1/search.svg"}
           alt="profile picture"
