@@ -158,7 +158,6 @@ export const newPostData = [
   },
 ];
 
-
 export const contactData = [
   "Frank",
   "Riri",

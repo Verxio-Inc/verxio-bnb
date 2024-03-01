@@ -34,7 +34,7 @@ const NewPost = ({
   subComments,
 }: INewPostProps) => {
   return (
-    <section className="border rounded">
+    <section className="border rounded-lg">
       <blockquote className="flex items-start gap-2 p-3">
         <div>
           <Image
@@ -101,7 +101,7 @@ const NewPost = ({
         </div>
       </div>
 
-      <div className="flex w-full items-center gap-y-2 flex-col border rounded-lg p-4">
+      <div className="flex w-full items-center gap-y-2 flex-col border-t border-b p-4">
         <div className="flex flex-col w-full items:start md:items-center md:flex-row gap-4 my-4">
           <Image
             src={"/images1/profileImage.svg"}
