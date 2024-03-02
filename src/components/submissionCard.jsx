@@ -5,16 +5,16 @@ const SubmissionCard = ({ item, selectUser, ischecked }) => {
   // const { firstName, bio, date, description } = item;
 
   const {
-    applicantFirstName,
-    applicantLastName,
-    applicantBio,
-    applicantResume,
-    applicantPortfolio,
-    applicantProposal,
-    dateSubmitted,
+    proposerFirstName,
+    proposerLastName,
+    proposerBio,
+    proposerResume,
+    proposerPortfolio,
+    proposalText,
+    submissionTime,
   } = item;
 
-  const milliseconds = Number(dateSubmitted) / 1000000; // Convert nanoseconds to milliseconds
+  const milliseconds = Number(submissionTime) * 1000; 
   const date = new Date(milliseconds).toLocaleString("default", { month: "short" , day:"2-digit"});
 
   return (
@@ -27,14 +27,14 @@ const SubmissionCard = ({ item, selectUser, ischecked }) => {
           <div>
             <div className="flex gap-1">
               <p className="text-[20px] font-bold text-[#18181B]">
-                {applicantFirstName}
+                {proposerFirstName}
               </p>
               <p className="text-[20px] font-bold text-[#18181B]">
-                {applicantLastName}
+                {proposerLastName}
               </p>
             </div>
             <p className="text-[16px] font-normal text-[#484851]">
-              {applicantBio}
+              {proposerBio}
             </p>
           </div>
           <div className="flex gap-2 items-center">
@@ -47,20 +47,20 @@ const SubmissionCard = ({ item, selectUser, ischecked }) => {
             />
           </div>
         </div>
-        <p className="text-[#484851] mt-3 mb-5">{applicantProposal}</p>
+        <p className="text-[#484851] mt-3 mb-5">{proposalText}</p>
         <div className="flex gap-8">
-          {applicantResume && (
+          {proposerResume && (
             <Link
-              href={applicantResume}
+              href={proposerResume}
               className="px-4 py-3 shadow-md bg-white rounded-[8px] italic"
             >
               Applicant resume
             </Link>
           )}
 
-          {applicantPortfolio && (
+          {proposerPortfolio && (
             <Link
-              href={applicantPortfolio}
+              href={proposerPortfolio}
               className="px-4 py-3 shadow-md bg-white rounded-[8px] italic"
             >
               Applicant portfolio

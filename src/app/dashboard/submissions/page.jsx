@@ -4,7 +4,7 @@ import Button from "../../../components/Button";
 import SubmissionCard from "../../../components/submissionCard";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import  { VerxioCreateTask } from '../../../components/abi/verxioTask.json';
+import { VerxioCreateTask } from '../../../components/abi/verxioTask.json';
 import { useContractRead } from "wagmi";
 
 const Page = () => {
@@ -13,46 +13,73 @@ const Page = () => {
   const [submissions, setSubmissions] = useState([]);
   const [activeTab, setActiveTab] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [applicantDetails, setApplicantDetails] = useState(null);
-
+  const [formattedSubmissions, setFormattedSubmissions] = useState([]);
+  
   const user = useSelector((state) => state.persistedReducer.user.userValue);
-
+  
   const { data } = useContractRead({
-      address: "0x1f6A37FECCB212859Cd4184BdD059b304885f8b5",
-      abi: VerxioCreateTask,
-      functionName: "getAllTaskSubmissions",
-    });
-  
-    useEffect(() => {
-      setSubmissions(data);
-    }, [data]);
-   
-  console.log("Task Submissions", submissions);
-
-  
-  const applicationData = {
-    ...data,
-    applicantFirstName: applicantDetails?.firstName,
-    applicantLastName: applicantDetails?.lastName,
-    applicantBio: applicantDetails?.bio,
-  }
+    address: "0x1f6A37FECCB212859Cd4184BdD059b304885f8b5",
+    abi: VerxioCreateTask,
+    functionName: "getAllTaskSubmissions",
+  });
 
   useEffect(() => {
-    const fetchApplicantDetails = async () => {
+    setSubmissions(data);
+  }, [data]);
+
+  useEffect(() => {
+    const fetchFormattedSubmissions = async () => {
       try {
-        const response = await fetch(
-          `https://verxio-backend.vercel.app/api/v1/profiles/${data.jobPoster}`
-        );
-        const applicantData = await response.json();
-        console.log("User Details", applicantData)
-        setApplicantDetails(applicantData.user);
+        const formattedSubmissions = await Promise.all(submissions.map(async (submission) => {
+          const {
+            jobPoster,
+            jobRequirements,
+            jobResponsibilities,
+            jobTitle,
+            taskId,
+            proposals,
+          } = submission;
+
+          const { submissionTime, proposer, proposalText } = proposals[0];
+          
+          try {
+            const response = await fetch(
+              `https://verxio-backend.vercel.app/api/v1/profiles/${proposer}`
+            );
+            const applicantData = await response.json();
+
+            return {
+              jobPoster,
+              jobRequirements,
+              jobResponsibilities,
+              jobTitle,
+              taskId,
+              submissionTime,
+              proposer,
+              proposalText,
+              proposerFirstName: applicantData.user.firstName,
+              proposerLastName: applicantData.user.lastName,
+              proposerBio: applicantData.user.bio,
+              proposerPortfolio: applicantData.user.website,
+              proposerResume: applicantData.user.powUrl
+
+            };
+          } catch (error) {
+            console.error("Error fetching owner details:", error);
+            return null;
+          }
+        }));
+
+        setFormattedSubmissions(formattedSubmissions);
       } catch (error) {
-        console.error("Error fetching owner details:", error);
+        console.error("Error processing submissions:", error);
       }
     };
 
-    fetchApplicantDetails();      
-  }, [data.jobPoster]);
+    if (submissions.length > 0) {
+      fetchFormattedSubmissions();
+    }
+  }, [submissions]);
 
 
   const selectUser = (item) => {
@@ -75,7 +102,6 @@ const Page = () => {
     setLoading(true);
     try {
       if (assignees.length > 0) {
-        const documentKey = "your_document_key";
         console.log("Assigning task...");
 
         console.log("Project assignment done.");
@@ -127,30 +153,32 @@ const Page = () => {
       </div>
 
       {activeTab === 1 &&
-        submissions
-          .filter((items) => items.jobPoster == user.owner)
-          .map((item) => (
-            <SubmissionCard
-              key={item.taskId.toString()}
-              item={item}
-              selectUser={selectUser}
-              isChecked={isCheckeds}
-            />
-          ))}
+        formattedSubmissions
+          .filter((item) => item.jobPoster === user.address)
+          .map((item) => {
+            return (
+              <SubmissionCard
+                key={item.taskId.toString()}
+                item={item}
+                selectUser={selectUser}
+                isChecked={isCheckeds}
+              />
+            );
+          })}
       {activeTab === 2 &&
-        // <div>
-        //   <p>Apply to a Task</p>
-        // </div>
-        submissions
-          .filter((items) => items.proposals.proposer == user.owner)
-          .map((item) => (
-            <SubmissionCard
-              key={item.proposals.proposer}
-              item={item}
-              selectUser={selectUser}
-              isChecked={isCheckeds}
-            />
-          ))}
+        formattedSubmissions
+          .filter((item) => item.proposer === user.address)
+          .map((item) => {
+            return (
+              <SubmissionCard
+                key={item.taskId.toString()}
+                item={item}
+                selectUser={selectUser}
+                isChecked={isCheckeds}
+              />
+            );
+          })}
+
     </div>
   );
 };

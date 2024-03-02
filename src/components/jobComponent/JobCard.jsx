@@ -35,17 +35,6 @@ const formattedDate = date.toLocaleString("default", {
   second: "2-digit",
 });
 
-// const submittedTime = Number(data.proposals[0].submissionTime) * 1000;
-// const dateFix = new Date(submittedTime);
-// const formattedDateFIx = dateFix.toLocaleString("default", {
-//   year: "numeric",
-//   month: "short",
-//   day: "2-digit",
-//   hour: "2-digit",
-//   minute: "2-digit",
-//   second: "2-digit",
-// });
-
 // data.postedTime = formattedDate;
 data.upvotes = data.upvotes.toString();
 data.downvotes = data.downvotes.toString();
