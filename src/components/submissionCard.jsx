@@ -3,6 +3,7 @@ import React from "react";
 
 const SubmissionCard = ({ item, selectUser, ischecked }) => {
   // const { firstName, bio, date, description } = item;
+
   const {
     applicantFirstName,
     applicantLastName,

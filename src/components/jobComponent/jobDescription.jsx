@@ -15,7 +15,9 @@ import LikeButtons from "../likeButtons";
 import CommentButton from "../commentButton";
 import { CloseCircle } from "iconsax-react";
 import { toast } from "react-toastify";
-import BNB from "../../assets/bnb-bnb-logo.svg"
+import BNB from "../../assets/bnb-bnb-logo.svg";
+import { useContractWrite, usePrepareContractWrite } from 'wagmi'
+import { VerxioCreateTask } from "../abi/verxioTask.json";
 
 const JobDescription = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,43 +30,70 @@ const JobDescription = () => {
     (state) => state.persistedReducer.jobValues.jobDetails
   );
 
-  console.log(data);
+  // console.log(data);
 
   const userProfile = useSelector(
     (state) => state.persistedReducer.user.userProfile
   );
   // console.log(data)
   // console.log(userProfile)
+  const { config } = usePrepareContractWrite({
+    abi: VerxioCreateTask,
+    address: '0x1f6A37FECCB212859Cd4184BdD059b304885f8b5',
+    functionName: 'submitTaskApplication',
+    args: [
+      data.taskId,
+      userProposal
+    ],
+  })
+    const {
+      data: taskProposalData,
+      isLoading: submittingTaskProposal,
+      isSuccess: taskProposalSubmitted,
+      write: submitTaskProposal,
+      isError: submittingTaskProposalError,
+    } = useContractWrite(config);
 
   const toggleModal = async () => {
     // setIsModalOpen(!isModalOpen);
     setLoading(true);
+    // try {
+    //   if (userProposal.trim() !== "") {
+    //     const submissionData = {
+    //       ...data,
+    //       applicantProposal: userProposal,
+    //       applicantFirstName: userProfile?.firstName,
+    //       applicantLastName: userProfile?.lastName,
+    //       applicantBio: userProfile?.bio,
+    //       applicantPortfolio: userProfile?.website,
+    //       applicantResume: userProfile?.powUrl,
+    //       applicantId: userProfile?._id,
+    //     };
+    //     console.log("Submission Data", submissionData);
+    //     console.log("Submitting task proposal...");
+
+
+    //     console.log("Submission successful");
+    //     toast.success("Submission successful");
+    //     setLoading(false);
+    //   }
+    // } catch (error) {
+    //   console.error("Task submission error:", error);
+    //   toast.error("Submission Failed");
+    //   setLoading(false);
+    // }
+
     try {
-      if (userProposal.trim() !== "") {
-        const submissionData = {
-          ...data,
-          applicantProposal: userProposal,
-          applicantFirstName: userProfile?.firstName,
-          applicantLastName: userProfile?.lastName,
-          applicantBio: userProfile?.bio,
-          applicantPortfolio: userProfile?.website,
-          applicantResume: userProfile?.powUrl,
-          applicantId: userProfile?._id,
-        };
-        console.log("Submission Data", submissionData);
-        console.log("Submitting task proposal...");
-
-
-        console.log("Submission successful");
-        toast.success("Submission successful");
-        setLoading(false);
-      }
-    } catch (error) {
-      console.error("Task submission error:", error);
-      toast.error("Submission Failed");
+      const transaction = submitTaskProposal();
+      toast.success("You've successfuly applied for the task.");
+      setLoading(false);
+    } catch (submittingTaskProposalError) {
+      console.error("Task Error:", submittingTaskProposalError);
+      toast.error('Task Submission Failed.')
       setLoading(false);
     }
   };
+
 
   const handleProposalChange = (event) => {
     setUserProposal(event.target.value);
@@ -84,48 +113,6 @@ const JobDescription = () => {
   }
   };
 
-
-  useEffect(() => {
-    getVotes(data.taskId);
-  }, [data.taskId]);
-
-  const upVote = async (id) => {
-    try {
-      const response = await fetch(
-        `https://verxio-backend.vercel.app/api/v1/posts/upvotes/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(
-          `Failed to upvote post: ${response.status} ${response.statusText}`
-        );
-      }
-
-      getVotes(data.taskId)
-      console.log("Post upvoted successfully!");
-      // const data = await response.json();
-
-    } catch (error) {
-      console.error("Error upvoting post:", error.message);
-      // Display error message to the user or handle it in another appropriate way
-    }
-  };
-  const downVote = async (id) => {
-      console.log("Post upvoted successfully!") 
-  };
-
-  const getVotes = async (id) => {
-
-      console.log("Post upvoted successfully!");
-      // setUpVoteValue(data?.contract?.upvotes)
-      // setDownVoteValue(data?.contract?.downvotes)
-  };
 
   const formatNumberWithCommas = (number) => {
     if (isNaN(number)) {
@@ -164,7 +151,7 @@ const JobDescription = () => {
             </div>
           </div>
           <div className=" flex gap-[24px] mt-[22px] items-center">
-            <LikeButtons upVote={upVote} id={"data.taskId.toString()"} downVote={downVote} upVoteValue={data.upvotes} downVoteValue={data.downvotes} />
+          <LikeButtons id={data.taskId} upVoteValue={data.upvotes} downVoteValue={data.downvotes}  />
             <CommentButton />
           </div>
         </div>

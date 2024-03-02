@@ -12,11 +12,11 @@ import {
   walletConnectWallet,
   coinbaseWallet,
 } from "@rainbow-me/rainbowkit/wallets";
-import { avalancheFuji } from "viem/chains";
+import { opBNBTestnet  } from "viem/chains";
 
 const projectId = "274de4271228fdd69013c56274f0e688";
 const { chains, publicClient } = configureChains(
-  [ avalancheFuji ],
+  [ opBNBTestnet ],
   [publicProvider()]
 );
 

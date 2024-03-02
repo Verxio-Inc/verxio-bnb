@@ -8,24 +8,7 @@ const Page = () => {
   const [projects, setProjects] = useState([]);
 
   const user = useSelector((state) => state.persistedReducer.user.userValue);
-  // useEffect(() => {
-  //   const list = async () => {
-  //     try {
-  //       const { items } = await listDocs({
-  //         collection: "projects",
-  //       });
-  //       setProjects(items);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   if (user) {
-  //     list();
-  //   }
-  // }, [user]);
-
-  console.log(projects);
+  // console.log(projects);
 
   return (
     <div className="border p-[32px] rounded-2xl">
