@@ -60,12 +60,11 @@ const Page = () => {
 
   const { config } = usePrepareContractWrite({
     abi: VerxioCreateTask,
-    address: '0x4c321A088EC43F5C9e246e4894798C7c77deb1e6',
-    functionName: 'submitTask',
+    address: '0x1f6A37FECCB212859Cd4184BdD059b304885f8b5',
+    functionName: 'createTask',
     args: [
       title,
       description,
-      'filedocurl.com',
       totalPeople,
       amount,
       jobType,
@@ -225,7 +224,7 @@ const Page = () => {
               />
               <ErrorMessage name="amount" component={Error} />
             </div>
-            <div className="flex flex-col gap-3 text-16 ">
+            {/* <div className="flex flex-col gap-3 text-16 ">
               <label htmlFor="fileDoc">
                 Upload File (doc, pdf, png, jpg, etc.)
               </label>
@@ -238,7 +237,7 @@ const Page = () => {
                 }
               />
               <ErrorMessage name="fileDoc" component={Error} />
-            </div>
+            </div> */}
             <div>
               <Button
                 type="submit"

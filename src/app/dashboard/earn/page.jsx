@@ -14,7 +14,7 @@ const Page = () => {
   );
 
   const { data } = useContractRead({
-    address: "0x4c321A088EC43F5C9e246e4894798C7c77deb1e6",
+    address: "0x1f6A37FECCB212859Cd4184BdD059b304885f8b5",
     abi: VerxioCreateTask,
     functionName: "getAllTasks",
   });

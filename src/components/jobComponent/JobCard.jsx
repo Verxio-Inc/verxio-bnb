@@ -35,12 +35,11 @@ const formattedDate = date.toLocaleString("default", {
   second: "2-digit",
 });
 
-data.postedTime = formattedDate;
+// data.postedTime = formattedDate;
 data.upvotes = data.upvotes.toString();
 data.downvotes = data.downvotes.toString();
 data.taskId = data.taskId.toString();
 data.totalPeople = data.totalPeople.toString();
-data.prizePoolUSDAmount = data.prizePoolUSDAmount.toString();
 data.prizePoolAmount = data.prizePoolAmount.toString();
 
 
@@ -97,13 +96,14 @@ console.log("Job Details", data)
             <p className="font-normal text-[14px] text-[#424242]">
               {data?.ownerFirstName} {data?.ownerLastName}
             </p>
-            <p className="text-[#484851] font-normal text-[16px] truncate ... max-w-[400px]">
+            <p className="text-[#484851] font-normal text-[16px] truncate ... max-w-[950px]">
               {data?.jobDescription}
             </p>
           </div>
         </div>
         <p className="text-[#0B0B28] text-[16px] font-semibold capitalize">
-          open
+          open 
+          {/* {data?.status} */}
         </p>
       </div>
       <div className="flex justify-between mt-[22px] items-center">
