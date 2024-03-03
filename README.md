@@ -26,14 +26,5 @@ Join a decentralized autonomous organization committed to enhancing community en
 - **Skill Enhancement:** Verxio Learn empowers users to enhance their skills, positioning them for lucrative opportunities.
 - **Integration Ahead:** Plans include integrating Juno DAO and Juno Payment, streamlining talent payments within the Verxio ecosystem.
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 
