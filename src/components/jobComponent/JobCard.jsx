@@ -42,8 +42,6 @@ data.taskId = data.taskId.toString();
 data.totalPeople = data.totalPeople.toString();
 data.prizePoolAmount = data.prizePoolAmount.toString();
 
-
-console.log("Job Details", data)
   const logo = (coin) => {
     if (coin === "etherum") {
       return Ethereum;
@@ -76,7 +74,7 @@ console.log("Job Details", data)
 
   const formatNumberWithCommas = (number) => {
     if (isNaN(number)) {
-      return number; // Return as is if not a valid number
+      return number; 
     }
     return parseFloat(number).toLocaleString();
   };
@@ -96,7 +94,7 @@ console.log("Job Details", data)
             <p className="font-normal text-[14px] text-[#424242]">
               {data?.ownerFirstName} {data?.ownerLastName}
             </p>
-            <p className="text-[#484851] font-normal text-[16px] truncate ... max-w-[950px]">
+            <p className="text-[#484851] font-normal text-[16px] truncate sm:max-w-[400px] lg:max-w-[750px]">
               {data?.jobDescription}
             </p>
           </div>

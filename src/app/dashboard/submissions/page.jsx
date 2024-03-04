@@ -30,7 +30,8 @@ const Page = () => {
   useEffect(() => {
     const fetchFormattedSubmissions = async () => {
       try {
-        const formattedSubmissions = await Promise.all(submissions.map(async (submission) => {
+        // Use the nullish coalescing operator (??) to handle the case where submissions is undefined
+        const formattedSubmissions = await Promise.all((submissions ?? []).map(async (submission) => {
           const {
             jobPoster,
             jobRequirements,
@@ -39,15 +40,15 @@ const Page = () => {
             taskId,
             proposals,
           } = submission;
-
+  
           const { submissionTime, proposer, proposalText } = proposals[0];
-          
+  
           try {
             const response = await fetch(
               `https://verxio-backend.vercel.app/api/v1/profiles/${proposer}`
             );
             const applicantData = await response.json();
-
+  
             return {
               jobPoster,
               jobRequirements,
@@ -62,21 +63,21 @@ const Page = () => {
               proposerBio: applicantData.user.bio,
               proposerPortfolio: applicantData.user.website,
               proposerResume: applicantData.user.powUrl
-
             };
           } catch (error) {
             console.error("Error fetching owner details:", error);
             return null;
           }
         }));
-
+  
         setFormattedSubmissions(formattedSubmissions);
       } catch (error) {
         console.error("Error processing submissions:", error);
       }
     };
-
-    if (submissions.length > 0) {
+  
+    // Ensure that submissions is defined before calling fetchFormattedSubmissions
+    if (submissions?.length > 0) {
       fetchFormattedSubmissions();
     }
   }, [submissions]);
