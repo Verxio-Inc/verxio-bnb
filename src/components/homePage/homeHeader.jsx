@@ -32,52 +32,6 @@ const HomeHeader = () => {
 
   console.log("Account detail", address)
 
-
-  // const fetchData = async (value) => {
-  //   try {
-  //     const response = await fetch(
-  //       `https://verxio-backend.vercel.app/api/v1/profiles/${value}`
-  //     ); // Replace with your actual endpoint
-  //     if (response.ok) {
-  //       const responseData = await response.json();
-  //       // console.log(responseData);
-  //       dispatch(setUserProfile(responseData.user));
-  //       setUser2(responseData.user);
-  //       router.push("/dashboard");
-  //       toast.success("Login Successfull");
-  //     } else {
-  //       console.error("GET request failed");
-  //       // console.log(response.status);
-  //       if (response.status === 404) {
-  //         toast.info("Pls create account");
-  //         router.push("/dashboard/settings");
-  //       }
-  //     }
-  //     // return response;
-  //   } catch (error) {
-  //     console.log("Error occurred while fetching data:", error);
-  //   }
-  // };
-  // const login = async () => {
-  //   if (user?.address) {
-  //     // If user has address
-  //     if (userProfile !== null && userProfile !== false) {
-  //       // If userProfile is not null or false, navigate to dashboard
-  //       router.push("/dashboard");
-  //       toast.success("Login Successfull");
-  //     } else {
-  //       // If userProfile is null or false, navigate to dashboard/settings
-        
-  //       router.push("/dashboard/settings");
-  //       toast.info("Pls create account");
-  //     }
-  //   } else {
-  //     // If no address, set user value and navigate to dashboard
-  //     dispatch(setUserValue({ address }));
-  //     router.push("/dashboard");
-  //   }
-  // };
-
   const fetchData = async (value) => {
     try {
       const response = await fetch(
