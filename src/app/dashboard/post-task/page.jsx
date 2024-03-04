@@ -6,7 +6,7 @@ import { useContractWrite } from 'wagmi';
 import { VerxioCreateTask } from '../../../components/abi/verxioTask.json';
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const userProfile = useSelector(
@@ -14,7 +14,7 @@ const Page = () => {
   );
 
   const user = useSelector((state) => state.persistedReducer.user.userValue);
-
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -59,23 +59,38 @@ const Page = () => {
       requirements,
       reward,
     ],
+    onError() {
+      setLoading(false)
+      toast.error('Task Upload Failed');
+    },
+    onSuccess: () => {
+      toast.success("Task Created");
+      setTitle(""),
+      setDescription(""),
+      setTotalPeople(""),
+      setAmount(""),
+      setJobType(""),
+      setPaymentMethod(""),
+      setResponsibilities(""),
+      setRequirements(""),
+      setReward("")
+
+      setLoading(false);
+      router.push("/dashboard/earn");
+    },
   });
-
+  
   const submitValue = async () => {
-    console.log("submitting...")
     setLoading(true);
-
+  
     try {
       const transaction = submitTaskWrite();
-      toast.success("Task created successfully.");
-      setLoading(false);
     } catch (error) {
-      console.error("Task Error:", error);
       toast.error('Task Upload Failed');
       setLoading(false);
     }
   };
-
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     switch (name) {
@@ -235,6 +250,7 @@ const Page = () => {
             name="Submit"
             isLoading={loading}
             className="mt-8 w-full"
+            
           />
         </div>
       </form>

@@ -16,8 +16,9 @@ import CommentButton from "../commentButton";
 import { CloseCircle } from "iconsax-react";
 import { toast } from "react-toastify";
 import BNB from "../../assets/bnb-bnb-logo.svg";
-import { useContractWrite, usePrepareContractWrite } from 'wagmi'
+import { useContractWrite } from 'wagmi'
 import { VerxioCreateTask } from "../abi/verxioTask.json";
+import { useRouter } from "next/navigation";
 
 const JobDescription = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,71 +26,49 @@ const JobDescription = () => {
   const [loading, setLoading] = useState(false);
   const [upVoteValue, setUpVoteValue] = useState(0)
   const [downVoteValue, setDownVoteValue] = useState(0)
+  const router = useRouter()
 
   const data = useSelector(
     (state) => state.persistedReducer.jobValues.jobDetails
   );
 
-  // console.log(data);
-
   const userProfile = useSelector(
     (state) => state.persistedReducer.user.userProfile
   );
-  // console.log(data)
-  // console.log(userProfile)
-  const { config } = usePrepareContractWrite({
-    abi: VerxioCreateTask,
-    address: '0x1f6A37FECCB212859Cd4184BdD059b304885f8b5',
-    functionName: 'submitTaskApplication',
-    args: [
-      data.taskId,
-      userProposal
-    ],
-  })
     const {
       data: taskProposalData,
       isLoading: submittingTaskProposal,
       isSuccess: taskProposalSubmitted,
       write: submitTaskProposal,
       isError: submittingTaskProposalError,
-    } = useContractWrite(config);
+    } = useContractWrite({
+      abi: VerxioCreateTask,
+      address: '0x1f6A37FECCB212859Cd4184BdD059b304885f8b5',
+      functionName: 'submitTaskApplication',
+      args: [
+        data.taskId,
+        userProposal
+      ],
+      onError(error) {
+        setLoading(false)
+        toast.error("Task owners cannot apply for task")
+        setUserProposal("")
+      },
+      onSuccess: () => {
+        toast.success("Application Sent");
+        setUserProposal("")
+        
+        setLoading(false);
+        router.push("/dashboard/earn");
+      },
+    });
 
   const toggleModal = async () => {
-    // setIsModalOpen(!isModalOpen);
     setLoading(true);
-    // try {
-    //   if (userProposal.trim() !== "") {
-    //     const submissionData = {
-    //       ...data,
-    //       applicantProposal: userProposal,
-    //       applicantFirstName: userProfile?.firstName,
-    //       applicantLastName: userProfile?.lastName,
-    //       applicantBio: userProfile?.bio,
-    //       applicantPortfolio: userProfile?.website,
-    //       applicantResume: userProfile?.powUrl,
-    //       applicantId: userProfile?._id,
-    //     };
-    //     console.log("Submission Data", submissionData);
-    //     console.log("Submitting task proposal...");
-
-
-    //     console.log("Submission successful");
-    //     toast.success("Submission successful");
-    //     setLoading(false);
-    //   }
-    // } catch (error) {
-    //   console.error("Task submission error:", error);
-    //   toast.error("Submission Failed");
-    //   setLoading(false);
-    // }
-
     try {
       const transaction = submitTaskProposal();
-      toast.success("You've successfuly applied for the task.");
-      setLoading(false);
-    } catch (submittingTaskProposalError) {
-      console.error("Task Error:", submittingTaskProposalError);
-      toast.error('Task Submission Failed.')
+    } catch (error) {
+      toast.error('Try again later')
       setLoading(false);
     }
   };

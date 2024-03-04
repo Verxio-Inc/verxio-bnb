@@ -8,6 +8,7 @@ const SubmissionCard = ({ item, selectUser, ischecked }) => {
     proposerFirstName,
     proposerLastName,
     proposerBio,
+    jobTitle,
     proposerResume,
     proposerPortfolio,
     proposalText,
@@ -47,7 +48,10 @@ const SubmissionCard = ({ item, selectUser, ischecked }) => {
             />
           </div>
         </div>
-        <p className="text-[#484851] mt-3 mb-5">{proposalText}</p>
+        <br/>
+        <p className="font-bold text-[#18181B] text-[16px]">{"Job Title: "} {jobTitle}</p>
+        <p className="text-[#484851] mt-3 mb-5"><strong>Job Proposal:</strong> {proposalText}</p>
+
         <div className="flex gap-8">
           {proposerResume && (
             <Link

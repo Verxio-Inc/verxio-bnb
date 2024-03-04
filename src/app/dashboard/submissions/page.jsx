@@ -30,57 +30,70 @@ const Page = () => {
   useEffect(() => {
     const fetchFormattedSubmissions = async () => {
       try {
-        // Use the nullish coalescing operator (??) to handle the case where submissions is undefined
         const formattedSubmissions = await Promise.all((submissions ?? []).map(async (submission) => {
           const {
             jobPoster,
             jobRequirements,
+            jobDescription,
             jobResponsibilities,
             jobTitle,
             taskId,
             proposals,
           } = submission;
+
+          if (proposals && proposals.length > 0) {
+            const formattedProposals = await Promise.all(proposals.map(async (proposal) => {
+              const { submissionTime, proposer, proposalText } = proposal;
   
-          const { submissionTime, proposer, proposalText } = proposals[0];
+              try {
+                const response = await fetch(
+                  `https://verxio-backend.vercel.app/api/v1/profiles/${proposer}`
+                );
+                const applicantData = await response.json();
   
-          try {
-            const response = await fetch(
-              `https://verxio-backend.vercel.app/api/v1/profiles/${proposer}`
-            );
-            const applicantData = await response.json();
+                return {
+                  jobPoster,
+                  jobRequirements,
+                  jobResponsibilities,
+                  jobDescription,
+                  jobTitle,
+                  taskId,
+                  submissionTime,
+                  proposer,
+                  proposalText,
+                  proposerFirstName: applicantData.user.firstName,
+                  proposerLastName: applicantData.user.lastName,
+                  proposerBio: applicantData.user.bio,
+                  proposerPortfolio: applicantData.user.website,
+                  proposerResume: applicantData.user.powUrl
+                };
+              } catch (error) {
+                console.error("Error fetching owner details:", error);
+                return null;
+              }
+            }));
   
-            return {
-              jobPoster,
-              jobRequirements,
-              jobResponsibilities,
-              jobTitle,
-              taskId,
-              submissionTime,
-              proposer,
-              proposalText,
-              proposerFirstName: applicantData.user.firstName,
-              proposerLastName: applicantData.user.lastName,
-              proposerBio: applicantData.user.bio,
-              proposerPortfolio: applicantData.user.website,
-              proposerResume: applicantData.user.powUrl
-            };
-          } catch (error) {
-            console.error("Error fetching owner details:", error);
-            return null;
+            return formattedProposals; 
+          } else {
+            return null; 
           }
         }));
   
-        setFormattedSubmissions(formattedSubmissions);
+      const filteredSubmissions = formattedSubmissions.filter(submission => submission !== null);
+      const flattenedSubmissions = filteredSubmissions.flat();
+      setFormattedSubmissions(flattenedSubmissions);
+
+        console.log("formatted", formattedSubmissions)
       } catch (error) {
         console.error("Error processing submissions:", error);
       }
     };
-  
-    // Ensure that submissions is defined before calling fetchFormattedSubmissions
+
     if (submissions?.length > 0) {
       fetchFormattedSubmissions();
     }
   }, [submissions]);
+  
 
 
   const selectUser = (item) => {
