@@ -2,11 +2,10 @@
 import { useState } from "react";
 import Button from "../../../components/Button";
 import * as Yup from "yup";
-import { useContractWrite } from 'wagmi';
+import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { VerxioCreateTask } from '../../../components/abi/verxioTask.json';
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-
 
 const Page = () => {
   const userProfile = useSelector(
@@ -38,14 +37,8 @@ const Page = () => {
     amount: Yup.number().required("Please input amount"),
   });
 
-  const {
-    data: taskData,
-    isLoading: isCreatingTask,
-    isSuccess: isTaskCreated,
-    write: submitTaskWrite,
-    isError: isCreatingTaskError,
-  } = useContractWrite({
-    abi: VerxioCreateTask,
+  const { config } = usePrepareContractWrite({
+    abi: VerxioCreateTask.abi,
     address: '0x1f6A37FECCB212859Cd4184BdD059b304885f8b5',
     functionName: 'createTask',
     args: [
@@ -60,6 +53,14 @@ const Page = () => {
       reward,
     ],
   });
+
+  const {
+    data: taskData,
+    isLoading: isCreatingTask,
+    isSuccess: isTaskCreated,
+    write: submitTaskWrite,
+    isError: isCreatingTaskError,
+  } = useContractWrite(config);
 
   const submitValue = async () => {
     console.log("submitting...")
@@ -244,6 +245,3 @@ const Page = () => {
 
 export default Page;
 
-const ErrorMessage = ({ children }) => {
-  return <p className="text-red-400  text-[12px] mt-[-5px]">{children}</p>;
-};

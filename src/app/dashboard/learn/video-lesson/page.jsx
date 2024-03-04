@@ -11,20 +11,17 @@ const Page = () => {
           // width="500"
           height="480"
           className="w-full rounded-xl"
-          src={`https://www.youtube.com/embed/mr_9XArcG9Y?si=WR-xff-GIy5xLJd8`}
+          src={`https://www.youtube.com/embed/kE-atXHNeV8?si=1JH8kjKWK7zsAG5i`}
           title="YouTube video player"
           allow="accelerometer; clipboard-write; encrypted-media; gyroscope;"
           allowFullScreen
         ></iframe>
         <p className="font-semibold text-[24px] text-[#303036] mt-8">
-          Building Dapps at Lightning Speed: Juno and the Internet Computer:{" "}
+          BNB Smart Chain Tutorial (Trust Wallet, MetaMask, Staking, Trading){" "}
           <br />
           <span className="text-[18px] font-light text-[#484851] ml-3 leading-[5px]">
-            In this workshop, you will learn how easily you can implement
-            authentication in your app, save data and images on the chain, and
-            ultimately launch your first smart contract on the Internet
-            Computer. And the best part? You won&apos;t need to write a single
-            line of backend code.
+            In this workshop, you will learn how easily you can implement and 
+            interact within the opBNB ecosystem.
           </span>
         </p>
         <div className="flex items-center justify-between mt-5">
@@ -37,7 +34,7 @@ const Page = () => {
                 David Dal Busco{" "}
               </p>
               <p className="text-[12px] text-[#60606C]">
-                Software Engineer at DFINITY
+                Software Engineer at Verxio Protocol
               </p>
             </div>
           </div>

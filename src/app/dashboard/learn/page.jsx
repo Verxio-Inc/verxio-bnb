@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import WomanVR from "../../../assets/womanVR.png";
 import Button from "../../../components/Button";
 import VideoCard from '../../../components/learnComponents/videoCard'
+import VideoCard1 from '../../../components/learnComponents/videoCard1'
+import VideoCard2 from '../../../components/learnComponents/videoCard2'
 
 const Page = () => {
   const userProfile = useSelector(
@@ -59,10 +61,9 @@ const Page = () => {
             }
           />
         </div>
+        <VideoCard1/>
         <VideoCard/>
-        <VideoCard/>
-        <VideoCard/>
-        <VideoCard/>
+        <VideoCard2/>
       </div>
     </div>
   );
