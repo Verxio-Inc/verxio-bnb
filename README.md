@@ -1,6 +1,6 @@
-# Verxio: Unleash Your Creative Potential in the Decentralized Web3 Ecosystem
+# Verxio
 
-**Verxio** empowers talents through a decentralized Web3 ecosystem, ensuring fair monetization for creative endeavors and contributions.
+Verxio is a decentralized social network designed for connecting crypto talents and founders within the opBNB ecosystem. Verxio serves as a hub for talent discovery and project management, facilitating seamless collaboration and innovation in the crypto industry
 
 ## Explore Verxio's Three Pillars:
 
