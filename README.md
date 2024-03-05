@@ -6,7 +6,7 @@ Verxio is a decentralized social network designed for connecting crypto talents 
 
 <h3>
   
-[Verxio Repo](https://github.com/Verxio-Inc/verxio-bnb) | [Verxio Demo](https://verxio-bnb.vercel.app/) | [Verxio Demo Video](https://youtu.be/XGH2ZHDhv5M)
+[Verxio Repo](https://github.com/Verxio-Inc/verxio-bnb) | [Verxio Demo](https://verxio-bnb.vercel.app/) | [Verxio Demo Video](https://youtu.be/qPYI9hFOvI8)
 
 </h3>
 
