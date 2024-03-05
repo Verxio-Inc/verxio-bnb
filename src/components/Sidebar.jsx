@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { Logo, SidebarMenuItem } from "./atoms";
 import Image from "next/image";
 import AxiosLogo from "../assets/AxiosLogo.svg";
@@ -7,7 +7,6 @@ import { useNav } from "../context/nav_context";
 import { NavigationItems } from "../lib/data/sideBarData";
 import { useDispatch, useSelector } from "react-redux";
 import LogoutButton from "./logout";
-import { ButtonConnect } from "./connectButton"
 
 const Sidebar = () => {
   const { isOpen, toggleNav } = useNav();
@@ -33,7 +32,7 @@ const Sidebar = () => {
                 <SidebarMenuItem key={`sidebar-item-${index}`} {...item} />
               ))}
             </ul>
-            {/* <ButtonConnect /> */}
+
             <LogoutButton />
 
             <button className="flex items-center mx-auto w-[80%] gap-3">

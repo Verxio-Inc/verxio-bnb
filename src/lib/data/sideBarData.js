@@ -23,11 +23,11 @@ export const NavigationItems = [
     icon: Feed,
     tabUrl: "/dashboard/social-feed",
   },
-  // {
-  //   tab: "DAO Proposals",
-  //   icon: Handshake,
-  //   tabUrl: "/dashboard/dao-proposal",
-  // },
+  {
+    tab: "DAO Proposals",
+    icon: Handshake,
+    tabUrl: "/dashboard/dao-proposal",
+  },
   {
     tab: "Projects",
     icon: Kanban,
