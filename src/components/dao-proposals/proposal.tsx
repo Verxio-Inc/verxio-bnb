@@ -31,7 +31,7 @@ const Proposal = ({
 }: IproposalProps) => {
   return (
     <Link
-        href={`/dashboard/dao-proposal/${id}`}
+      href={`/dashboard/dao-proposal/${id}`}
       className="relative inline-block w-full border rounded p-4 space-y-3"
     >
       <div className="flex items-center justify-between">
@@ -41,7 +41,7 @@ const Proposal = ({
             {userId}
           </p>
           <button
-            className={`text-base font-normal py-[10px] px-4 rounded-lg bg-[#DDF4CE]  text-[#489419] border border-[#489419] ${
+            className={`text-base font-normal py-[6px] px-4 rounded-lg bg-[#DDF4CE]  text-[#489419] border border-[#489419] ${
               status === "nonactive" && " text-red-500 border border-red-500"
             } `}
           >
@@ -61,19 +61,29 @@ const Proposal = ({
         <h2 className="text-[#424242] font-semibold text-base md:text-xl capitalise">
           {proposalName}
         </h2>
-        <p className="line-clamp-3 text-base">{description}</p>
+        <p className="line-clamp-3 text-sm text-[#484851]">{description}</p>
       </div>
 
       <section className="flex items-center justify-between">
         <div className="flex gap-3 items-center border rounded-lg px-6 py-2 text-[#000000]">
-          <p className="flex items-center gap-2 cursor-pointer">
-          <Image src={"/images1/upvote.svg"} alt="profile picture" width={20} height={20} />
+          <p className="flex items-center text-sm gap-2 cursor-pointer">
+            <Image
+              src={"/images1/upvote.svg"}
+              alt="profile picture"
+              width={20}
+              height={20}
+            />
             {like}
-            </p>
-          <p className="flex items-center gap-2 cursor-pointer">
+          </p>
+          <p className="flex items-center text-sm gap-2 cursor-pointer">
             {dislike}
-          <Image src={"/images1/downvote.svg"} alt="profile picture" width={20} height={20} />
-            </p>
+            <Image
+              src={"/images1/downvote.svg"}
+              alt="profile picture"
+              width={20}
+              height={20}
+            />
+          </p>
         </div>
         <p className="text-[#3D41CC] font-semibold">{time}</p>
       </section>

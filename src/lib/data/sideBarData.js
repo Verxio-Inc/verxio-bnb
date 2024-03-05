@@ -1,5 +1,5 @@
 import HandCoins from "../../assets/HandCoins.svg";
-import BriefcaseDollar from "../../assets/briefcase-dollar.svg";
+// import BriefcaseDollar from "../../assets/briefcase-dollar.svg";
 import BookOpen from "../../assets/BookOpen.svg";
 import Handshake from "../../assets/Handshake.svg";
 import Kanban from "../../assets/Kanban.svg";
@@ -23,11 +23,11 @@ export const NavigationItems = [
     icon: Feed,
     tabUrl: "/dashboard/social-feed",
   },
-  // {
-  //   tab: "DAO Proposals",
-  //   icon: Handshake,
-  //   tabUrl: "/dashboard/dao-proposal",
-  // },
+  {
+    tab: "DAO Proposals",
+    icon: Handshake,
+    tabUrl: "/dashboard/dao-proposal",
+  },
   {
     tab: "Projects",
     icon: Kanban,
