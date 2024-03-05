@@ -7,7 +7,7 @@ const page = ({ params }: { params: { "proposal-id"?: string } }) => {
   // this single page will be used to display the list of proposals using their ID dynamically
   return (
     <div>
-      ID: {params?.["proposal-id"]}
+      {/* ID: {params?.["proposal-id"]} */}
       <CreateProposal />
       <section className="border p-0 md:p-[32px] rounded">
         <div className="flex items-center justify-between border-b pb-6">
