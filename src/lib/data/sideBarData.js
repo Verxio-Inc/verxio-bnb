@@ -1,5 +1,5 @@
 import HandCoins from "../../assets/HandCoins.svg";
-import BriefcaseDollar from "../../assets/briefcase-dollar.svg";
+// import BriefcaseDollar from "../../assets/briefcase-dollar.svg";
 import BookOpen from "../../assets/BookOpen.svg";
 import Handshake from "../../assets/Handshake.svg";
 import Kanban from "../../assets/Kanban.svg";

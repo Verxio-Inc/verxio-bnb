@@ -23,7 +23,7 @@ const page = ({ params }: { params: { "proposal-id"?: string } }) => {
                 Frank
               </p>
             </div>
-            <div className="flex gap-3 items-center border rounded-lg px-6 py-2 text-[#000000]">
+            <div className="flex gap-3 items-center text-sm border rounded-lg px-6 py-2 text-[#000000]">
               <p className="flex items-center gap-2 cursor-pointer">
                 <Image
                   src={"/images1/upvote.svg"}
@@ -47,7 +47,7 @@ const page = ({ params }: { params: { "proposal-id"?: string } }) => {
 
           <blockquote className="flex items-end gap-3 flex-col">
             <button
-              className={`text-base font-normal py-2 px-6 rounded-lg bg-[#DDF4CE]  text-[#489419] border border-[#489419]  `}
+              className={`text-base font-normal py-[6px] px-6 rounded-lg bg-[#DDF4CE]  text-[#489419] border border-[#489419]  `}
             >
               Active
             </button>
@@ -69,7 +69,7 @@ const page = ({ params }: { params: { "proposal-id"?: string } }) => {
               Objective:
             </h3>
 
-            <p className="line-clamp-3 text-base">
+            <p className="line-clamp-3 text-sm">
               To establish a decentralised investment fund managed by a DAO,
               allowing participants to collectively decide on investment
               strategies, asset allocations, and portfolio management,
@@ -82,7 +82,7 @@ const page = ({ params }: { params: { "proposal-id"?: string } }) => {
               Overview:
             </h3>
 
-            <p className="line-clamp-3 text-base">
+            <p className="line-clamp-3 text-sm">
               The proposed DAO will operate as a collective investment vehicle,
               where members can contribute funds and collectively decide on
               investment decisions through voting mechanisms. The DAO will be
@@ -97,13 +97,13 @@ const page = ({ params }: { params: { "proposal-id"?: string } }) => {
             </h3>
 
             <div className="flex flex-col gap-y-3">
-              <p className="text-base">
+              <p className="text-sm">
                 1. Membership: Any individual can become a member of the DAO by
                 staking a certain amount of tokens (e.g., Ethereum or a custom
                 token issued by the DAO). Members will have voting rights
                 proportional to their stake.
               </p>
-              <p className="text-base">
+              <p className="text-sm">
                 2. Membership: Any individual can become a member of the DAO by
                 staking a certain amount of tokens (e.g., Ethereum or a custom
                 token issued by the DAO). Members will have voting rights

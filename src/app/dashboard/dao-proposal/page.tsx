@@ -1,5 +1,9 @@
 import Image from "next/image";
-import {Proposal,CreateProposal, daoProposalData } from "../../../components/dao-proposals"
+import {
+  Proposal,
+  CreateProposal,
+  daoProposalData,
+} from "../../../components/dao-proposals";
 
 const page = () => {
   return (
@@ -7,7 +11,7 @@ const page = () => {
       {/* firstUpper Section */}
       <section className="h-[208px] flex flex-col gap-12 p-8 bg-[#0D0E32] rounded">
         <div className="flex items-center justify-between">
-          <p className="text-[#DFDFF7] font-medium text-base md:text-[26px]">
+          <p className="text-[#DFDFF7] border border-[#8E90E2] rounded-lg py-2 px-4 font-medium text-base md:text-[26px]">
             DOA Proposals
           </p>
 
@@ -32,7 +36,7 @@ const page = () => {
           <input
             type="text"
             placeholder="Search for DAOs and proposal"
-            className="w-[520px] border border-[#00ADEF] rounded-full bg-transparent outline-none px-6 py-3 pl-6 text-[#DFDFF7]"
+            className="w-[520px] border border-[#00ADEF] font-normal rounded-full bg-transparent outline-none px-6 py-3 pl-6 text-[#DFDFF7]"
           />
         </div>
       </section>
